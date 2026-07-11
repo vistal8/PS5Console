@@ -264,6 +264,10 @@ kstuff_game_auto_toggle=0
 - 不要在游戏仍在写入存档时断电、拔盘或强制停止 Payload。
 
 ---
+界面预览
+<img width="2560" height="1271" alt="PS5 Console" src="https://github.com/user-attachments/assets/1259fa4c-2801-498b-afb9-a1c6b6221cd3" /></br>
+<img width="2560" height="1271" alt="PS5 Consolegames" src="https://github.com/user-attachments/assets/746b5a45-e5c5-40bf-b940-2cc7571e4d4b" />
+
 
 ## English Quick Reference
 
