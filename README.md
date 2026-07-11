@@ -1,3 +1,4 @@
+#声明，插件版权归插件开发者所有，本人只是基于插件进行修改并合并。
 # PS5 Console Payload 管理器
 
 `PS5 Console` 是一个面向 PS5 的 Payload、游戏和存档综合管理器。它既将四个核心组件合并到一个 ELF，也管理外部 etaHEN 插件、Payload 和 ELF：
