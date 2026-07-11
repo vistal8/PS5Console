@@ -20,7 +20,7 @@
 最终文件：
 
 ```text
-shadowmountplus-ghostcontrol-garlic-ftpsrv-cn-merged.elf
+PS5_Console.elf
 ```
 
 ## 主要改动总览
