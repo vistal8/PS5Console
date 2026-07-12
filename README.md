@@ -3,12 +3,12 @@
 
 # 🎮 PS5 Console Payload 管理器
 
-**PS5 Console** 是一个面向 PS5 的 Payload、游戏和存档综合管理器。它将四个核心组件合并到一个 ELF 中，并统一管理外部 etaHEN 插件、Payload 和 ELF。
+**PS5 Console** 是一个面向 PS5 的 Payload、游戏和存档综合管理器。它将五个组件合并到一个 ELF 中，并统一管理外部 etaHEN 插件、Payload 和 ELF。
 
 <details>
 <summary><strong>🇬🇧 English Description</strong></summary>
 
-**PS5 Console** is an all-in-one manager for PS5 Payloads, Games, and Saves. It merges four core components into a single ELF and manages external etaHEN plugins, payloads, and ELFs.
+**PS5 Console** is an all-in-one manager for PS5 Payloads, Games, and Saves. It merges five components into a single ELF and manages external etaHEN plugins, payloads, and ELFs.
 
 </details>
 
