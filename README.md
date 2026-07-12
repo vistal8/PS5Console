@@ -26,6 +26,7 @@
 | **Garlic SaveMgr** | PS4/PS5 存档浏览、解密、加密、重签、导入及云备份。 |
 | **ftpsrv** | PS5 FTP 文件服务。 |
 | **Ghostcontrol** | USB 手柄兼容与控制功能。 |
+| **Fan-control** |  温度监控与风扇调整 |
 
 <details>
 <summary><strong>🇬🇧 Core Components (English)</strong></summary>
@@ -36,6 +37,7 @@
 | **Garlic SaveMgr** | Save browsing, decryption, encryption, resigning, importing, and cloud backup. |
 | **ftpsrv** | PS5 FTP file service. |
 | **Ghostcontrol** | USB controller compatibility and control features. |
+| **Fan-control** | Fan & Performance compatibility and control features. |
 
 </details>
 
