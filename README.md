@@ -18,12 +18,98 @@
 - 自动识别 V52 游戏扫描、PS5 -backpork、Websrv、FTP 文件服务和万能手柄等常见功能。
 - 游戏管理、PKG 卸载、ShadowMountPlus 挂载源删除也属于本管理器的游戏 Payload 管理能力。
 
-最终文件：
-
-```text
+## 更新动态 7.12
+一、GhostControl / USB 手柄修复
+修复待机后 USB 虚拟手柄未完全释放，导致 PS5 提示“无法连接更多蓝牙手柄”的问题。
+待机前自动暂停 GhostControl，并释放 USB endpoint 和虚拟手柄。
+唤醒后不再自动反复扫描 USB 手柄，避免重复创建虚拟设备。
+增加系统级单实例锁： /data/PS5Console/PS5_Console.lock
+阻止 PS5 Console 被重复注入，避免多个 GhostControl 管理线程同时占用手柄槽位。
+控制中心禁止手动或自动加载自身 ELF，包括：
 PS5_Console.elf
-```
+shadowmountplus.elf
+shadowmountplus-*.elf
+GhostControl 每次开机只自动扫描一次 USB 手柄。
+开机后的新 USB 手柄改为通过 Web UI 手动扫描。
+控制中心新增“扫描 USB 手柄”按钮，支持中英文状态反馈。
+待机状态下禁止扫描，避免错误创建虚拟手柄。
+修复首次进入游戏后 USB 手柄无法控制的问题：
+检测到游戏启动后延迟约 1.2 秒。
+自动将现有虚拟手柄重新绑定到当前用户。
+无需拔插手柄或重新扫描。
+不会新增虚拟手柄或占用额外槽位。
+移除高频 VDI 成功日志。
+取消每 600 个输入包进行一次实体手柄检查。
+停止每两秒持续枚举 USB，降低 USB 总线、CPU 和日志写入压力。
+移除风扇控制循环中的周期性 [FAN] threshold= 调试输出。
+二、游戏扫描与挂载逻辑
+调整自动扫描规则：
+PS5 每次完整开机后，Payload 首次启动自动扫描并挂载一次。
+同一次开机内重新加载 Payload不自动扫描。
+待机唤醒后不自动扫描。
+其他扫描操作全部由 Web UI 手动触发。
+开机扫描状态保存在： /data/PS5Console/boot_scan.marker
+修复待机清理游戏挂载后，重复加载 Payload 可能错误执行自动扫描的问题。
+保留“扫描新游戏”作为后续手动挂载入口。
+三、游戏标题广告净化
+增加游戏标题自动净化功能。
+扫描时自动删除标题末尾的网站域名广告，例如：
+Metro Exodus-2468c.com → Metro Exodus
+NBA 2K25-2468c.com → NBA 2K25
+Far Cry® 6-2468c.com → Far Cry® 6
+Superliminal 2468c.com → Superliminal
+同步修正 app.db 中已经注册的污染标题。
+新安装游戏的 param.json 副本也会自动净化。
+普通安装和批量安装均支持。
+不修改原始游戏镜像。
+规则只处理标题末尾明显的域名，保留正常数字、版本号及标题内容。
+四、日志和配置文件整理
+所有日志与配置文件统一迁移到： /data/PS5Console/
+首次启动新版时自动迁移旧配置和日志，避免已有设置丢失。
+Web UI 中的相关路径说明同步更新。
+控制中心终端区域新增“清空日志”按钮：
+清空前二次确认。
+支持中文和英文。
+清理当前日志及轮转日志。
+同步清空网页终端内容。
+不删除配置文件。
+FTP 部署信息已保存至项目记忆文件： /home/vistal/workspace/ps5/PROJECT_MEMORY.md
+五、Web UI 修改
+“Payload 管理管理”统一改名为“控制中心”。
+高级设置新增中文 / English 界面语言切换。
+语言设置通过浏览器 localStorage 保存，刷新后继续生效。
+补齐英文模式下的主要界面、动态状态、设置说明及终端日志翻译。
+风扇温度控制卡片的“设置”按钮现在会：
+自动进入高级设置。
+滚动到风扇设置区域。
+聚焦并突出显示该区域。
+“扫描新游戏”上方新增 CPU、GPU 双温度仪表：
+仅在风扇温度控制开启时显示。
+根据温度显示绿色、橙色或红色状态。
+支持中英文。
+高级设置的详细设置区域改为居中显示。
+顶部导航入口改为桌面端整体水平居中：
+控制中心
+存档工具
+游戏管理
+高级设置
+移动端继续使用折叠菜单。
+关闭提示中的： by earthonion 已改为： By LeLe
+移除原 Garlic 页面中指向 earthonion 的 GitHub Sponsor 按钮。
+六、风扇与性能问题检查
+确认原合并版会周期性输出风扇调试信息，现已移除。
+日志曾记录 CPU 温度达到约 86°C、GPU 达到约 70°C，存在热降频风险。
+GhostControl 原有的高频 USB 枚举、输入日志和周期检查也可能造成卡顿，相关热路径已精简。
+etaHEN 已集成 kstuff，不建议同时单独加载另一份 kstuff-lite，避免重复内核补丁导致卡顿、冻结或系统错误。
+建议关闭不必要的 etaHEN Controller Shortcuts、Overlay、FPS/温度 Overlay 和作弊插件进行对照测试。
+七、构建与最终文件
+所有修改均已使用上传的 PS5 Payload SDK 重新编译，并生成完整合并版：
 
+ShadowMountPlus
+GhostControl
+Garlic Save Manager
+ftpsrv
+fan-control
 ## 主要改动总览
 
 - 将四个项目合并为一个可加载 ELF，并统一使用 `PS5 Console` 品牌和中文通知。
