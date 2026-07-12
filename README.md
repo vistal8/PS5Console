@@ -1,3 +1,4 @@
+
 <div align="center">
 
 # 🎮 PS5 Console Payload 管理器
@@ -200,3 +201,240 @@ All modifications recompiled with PS5 Payload SDK into a full merged version:
 2. 启动通知显示 `PS5 Console 已启动` 后，在同一局域网设备打开：
    ```text
    http://<PS5-IP>:7777/
+   ```
+3. 桌面浏览器使用固定左侧菜单；手机使用顶部汉堡菜单。
+4. 默认界面使用 PS5 蓝色主题。可在首页底部切换 `PS5 / 白 / 黑 / 绿`。
+
+> **注意**: 旧版本保存过黑色主题时，新版首次打开会自动迁移为 PS5 蓝色，之后继续记住所选主题。
+
+<details>
+<summary><strong>🇬🇧 Quick Start (English)</strong></summary>
+
+1. Inject or load the final ELF into the PS5.
+2. Once the notification "PS5 Console Started" appears, open on a device in the same LAN:
+   ```text
+   http://<PS5-IP>:7777/
+   ```
+3. Desktop uses fixed left sidebar; mobile uses hamburger menu.
+4. Default theme is PS5 Blue. Switch between `PS5 / White / Black / Green` at the bottom of the home page.
+
+> **Note**: If Black theme was saved in old versions, the first launch of the new version will migrate to PS5 Blue, then remember your choice thereafter.
+
+</details>
+
+---
+
+### 🖥️ 界面和菜单
+
+#### Payload 管理首页
+
+首页提供大按钮卡片：
+
+- **扫描新游戏**: 手动触发 ShadowMountPlus 扫描。
+- **ftpsrv**: 立即启动或保存为禁用。
+- **Ghostcontrol**: 立即启动或保存为禁用。
+- **etaHEN plugins / payloads / ELF**: 扫描配置目录并显示插件卡片。
+
+模块开启时卡片显示鲜艳绿色，关闭时显示红色。`重启/启动` 会重新请求启动对应模块。关闭模块主要保存 `enabled=false`，使其下次不自动启动。
+
+<details>
+<summary><strong>🇬🇧 Payload Management Home (English)</strong></summary>
+
+Home page features large button cards:
+
+- **Scan New Games**: Manually trigger ShadowMountPlus scan.
+- **ftpsrv**: Start immediately or save as disabled.
+- **Ghostcontrol**: Start immediately or save as disabled.
+- **etaHEN plugins / payloads / ELF**: Scan config directories and display plugin cards.
+
+Cards show vivid green when active, red when inactive. `Restart/Start` requests a module restart. Disabling saves `enabled=false` to prevent auto-start next time.
+
+</details>
+
+#### 存档工具
+
+左侧的“存档工具”包含：
+
+- **浏览**: 查看存档、挂载、下载、删除和文件管理。
+- **解密**: 导出可编辑的解密存档。
+- **加密**: 把处理后的文件重新生成加密存档。
+- **重签**: 修改存档账户归属。
+- **导入**: 导入加密或解密存档。
+
+支持 PS4、PS5、本机存档和 USB 存档。执行覆盖、删除、重签前应先备份。
+
+<details>
+<summary><strong>🇬🇧 Save Tools (English)</strong></summary>
+
+The "Save Tools" sidebar includes:
+
+- **Browse**: View, mount, download, delete, and file management.
+- **Decrypt**: Export decrypted saves for editing.
+- **Encrypt**: Regenerate encrypted saves from processed files.
+- **Resign**: Modify save account ownership.
+- **Import**: Import encrypted or decrypted saves.
+
+Supports PS4, PS5, local, and USB saves. Always backup before overwriting, deleting, or resigning.
+
+</details>
+
+#### 游戏管理
+
+游戏管理使用封面网格，支持按游戏名、Title ID 和源路径搜索。
+
+- **来源判断规则**:
+  - 扫描到 `.exfat`、`.ffpfsc`、`.ffpkg` 或 `.phu` 源文件时，优先标记为 **ShadowMountPlus 挂载**。
+  - 未匹配到 ShadowMountPlus 源文件的可卸载 `app.db` 项标记为 **PKG 安装**。
+  - 扫描目录、完整源路径和 Title ID 会去重，避免同一游戏重复出现。
+- **操作菜单**: 每张卡右上角的三点菜单提供操作：
+  - **卸载 PKG**: 卸载游戏本体，不删除系统存档。
+  - **删除挂载文件**: 永久删除 ShadowMountPlus 源文件，此操作不可恢复。
+
+<details>
+<summary><strong>🇬🇧 Game Management (English)</strong></summary>
+
+Game management uses a cover grid, supporting search by Name, Title ID, and Source Path.
+
+- **Source Logic**:
+  - Priority given to **ShadowMountPlus Mount** if source files (`.exfat`, `.ffpfsc`, etc.) are found.
+  - Items in `app.db` without source files are marked as **PKG Install**.
+  - Deduplicates by scan root, full path, and Title ID to avoid duplicates.
+- **Actions**: Three-dot menu on cards offers:
+  - **Uninstall PKG**: Uninstalls game body, keeps system saves.
+  - **Delete Mount File**: Permanently deletes ShadowMountPlus source file (irreversible).
+
+</details>
+
+---
+
+### ⚙️ 模块和 ELF 管理
+
+高级设置可以分别配置 `PS5 Console Web`、`ftpsrv` 和 `Ghostcontrol`：
+
+- **启用**: Payload 启动时直接启动该模块。
+- **随机**: 仅在启用时参与随机启动逻辑。
+
+只勾选“启用”而不勾选“随机”，表示每次直接启动。首页按钮用于当前会话立即启动和保存启用状态。
+
+默认扫描目录包括：
+
+```text
+/data/etaHEN/plugins
+/data/etaHEN/payloads
+```
+
+网页会扫描插件、Payload 和 ELF，并把启动或重启请求发送给本机 ELF Loader。必须先运行兼容的 `elfldr`；否则网页会报告 Loader 连接失败。
+
+配置文件: `/data/garlic/elf_plugins.json`
+
+<details>
+<summary><strong>🇬🇧 Module & ELF Management (English)</strong></summary>
+
+Advanced settings allow individual configuration of `PS5 Console Web`, `ftpsrv` and `Ghostcontrol`:
+
+- **Enable**: Starts module directly when Payload launches.
+- **Random**: Participates in random start logic only if enabled.
+
+Checking "Enable" but not "Random" means direct start every time. Home buttons control immediate start and save state for the current session.
+
+Default scan directories include:
+
+```text
+/data/etaHEN/plugins
+/data/etaHEN/payloads
+```
+
+The web UI scans plugins, payloads, and ELFs, sending start/restart requests to the local ELF Loader. A compatible `elfldr` must be running, or the web UI will report a connection failure.
+
+Config file: `/data/garlic/elf_plugins.json`
+
+</details>
+
+---
+
+### ☁️ 存档云备份
+
+支持以下目标：
+
+- PS5 本地目录
+- USB 目录
+- FTP
+- Google Drive
+
+云配置文件: `/data/garlic/cloud.json`
+
+#### FTP 增量备份
+
+FTP 使用固定的远端文件名，并通过 FTP `MDTM` 比较远端时间与本地存档源文件的最新修改时间：
+
+- **本地较新**: 重新打包并上传。
+- **时间相同**: 跳过上传。
+- **远端更新**: 跳过上传。
+- **FTP 不支持 `MDTM` 或远端文件不存在**: 正常上传。
+
+自动备份需要：
+
+1. 启用云备份及至少一个备份目标。
+2. FTP 目标需单独勾选启用，仅把提供方选为 FTP 不代表目标已启用。
+3. `watch_titles` 留空表示全部；填写后只有列表中的 Title ID 才自动备份。
+4. 游戏关闭或回到主页后，生命周期监视器等待存档写盘稳定，再检查变化并开始备份。
+
+<details>
+<summary><strong>🇬🇧 Save Cloud Backup (English)</strong></summary>
+
+Supports the following targets:
+
+- PS5 Local Directory
+- USB Directory
+- FTP
+- Google Drive
+
+Cloud config: `/data/garlic/cloud.json`
+
+#### FTP Incremental Backup
+
+FTP uses fixed remote filenames and compares remote time with local save modification time via `MDTM`:
+
+- **Local Newer**: Repack and upload.
+- **Time Same**: Skip upload.
+- **Remote Newer**: Skip upload.
+- **No MDTM or File Missing**: Upload normally.
+
+Auto-backup requires:
+
+1. Enable Cloud Backup and at least one target.
+2. FTP target must be enabled separately; selecting FTP provider does not auto-enable the target.
+3. Empty `watch_titles` means all; filled list restricts auto-backup to listed Title IDs.
+4. After game close or return to home, the lifecycle monitor waits for save write stability before checking changes and backing up.
+
+</details>
+
+---
+
+### 📝 状态和日志
+
+网页右下角显示真实 PS5 系统版本。首页底部显示内部存储和 `ext1` 的容量与剩余空间。
+
+统一日志目录: `/data/sgfcnlog/`
+
+主要日志文件:
+
+```text
+/data/sgfcnlog/shadowmountplus.log
+/data/sgfcnlog/garlic.log
+/data/sgfcnlog/ftpsrv.log
+/data/sgfcnlog/ghostcontrol.log
+/data/sgfcnlog/sync_history.log
+/data/sgfcnlog/elf_plugins.log
+```
+
+查看方式:
+
+- 首页点击“查看近期同步日志”。
+- 使用 ftpsrv 下载 `/data/sgfcnlog/`。
+- 通过其他 PS5 文件管理工具直接读取日志文件。
+
+<details>
+<summary><strong>🇬🇧 Status & Logs (English)</strong></summary>
+
+Bottom right of web UI shows real PS5 system version. Bottom of home page
