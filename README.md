@@ -268,9 +268,9 @@ PS5 Console 建立在以下项目及 PS5 开源社区工作的基础上：
 各组件继续遵循其原始许可证与署名要求。合并源码、上游许可证和原始说明应随发布内容一并保留。
 
 ## 界面预览
-<img width="2560" height="1271" alt="PS5 Console" src="https://github.com/user-attachments/assets/c299d502-d286-4fd0-8a04-0ff21ded7334" />
+<img width="2560" height="1271" alt="PS5 Consolegames" src="https://github.com/user-attachments/assets/5ee599d6-bc2b-4a45-b59b-a84465c1bd36" />
+<img width="2560" height="1271" alt="PS5 Consoleadv" src="https://github.com/user-attachments/assets/ec899b17-6566-485c-82ea-51148e9629ec" />
+<img width="2560" height="1271" alt="PS5 Console" src="https://github.com/user-attachments/assets/593304bc-ffe2-42af-ab59-8aa349acd9d7" />
 
-<img width="2560" height="1271" alt="PS5 Consolegames" src="https://github.com/user-attachments/assets/7cefbd63-e20d-4228-9c28-118a07589cb1" />
-<img width="2560" height="1271" alt="PS5 Consoleadv" src="https://github.com/user-attachments/assets/de451b4b-849f-401b-bf1a-8545d21fea50" />
 
 
