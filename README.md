@@ -40,11 +40,6 @@ http://<PS5-IP>:7777/
 | 日志管理 | 在 Web 终端查看运行信息，并通过二次确认清空当前日志和轮转日志 |
 | 中英文界面 | 在中文与 English 之间切换，并通过浏览器本地存储保留语言选择 |
 
-最终构建文件名为：
-
-```text
-PS5_Console.elf
-```
 
 ## 主要功能
 
@@ -271,5 +266,11 @@ PS5 Console 建立在以下项目及 PS5 开源社区工作的基础上：
 - [PS5 Payload SDK](https://github.com/ps5-payload-dev/sdk)
 
 各组件继续遵循其原始许可证与署名要求。合并源码、上游许可证和原始说明应随发布内容一并保留。
+
+## 界面预览
+<img width="2560" height="1271" alt="PS5 Console" src="https://github.com/user-attachments/assets/c299d502-d286-4fd0-8a04-0ff21ded7334" />
+
+<img width="2560" height="1271" alt="PS5 Consolegames" src="https://github.com/user-attachments/assets/7cefbd63-e20d-4228-9c28-118a07589cb1" />
+<img width="2560" height="1271" alt="PS5 Consoleadv" src="https://github.com/user-attachments/assets/de451b4b-849f-401b-bf1a-8545d21fea50" />
 
 
